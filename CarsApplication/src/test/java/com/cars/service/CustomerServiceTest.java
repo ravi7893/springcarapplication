@@ -108,7 +108,7 @@ class CustomerServiceTest {
         Optional<Customer> c2=Optional.of(c1);
 		   Mockito.when(repo.findById((long) 10)).thenReturn(c2);
 
-		   assertThat(cuservice.getCustomer(c1.getUserId())).isEqualTo(c2);
+		   assertThat(cuservice.getCustomer(10)).isEqualTo(c2);
 	}
 	
 	@Test
