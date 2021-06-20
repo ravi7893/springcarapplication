@@ -24,16 +24,19 @@ import com.cars.service.OrderService;
 
 public class OrderController {
 
-	@Autowired
+	@Autowired	/* To connect with the order service and add dependency Injection */
 	OrderService orderservice;
 	
+	/* To Add new order details in the database */
 	@PostMapping(path="/addorder")
 	public ResponseEntity<Order> addOrder(@RequestBody Order order) throws ResourceNotFoundException
 	{
        Order e1=orderservice.addOrder(order);
-		ResponseEntity<Order> re=new ResponseEntity<Order>(e1,HttpStatus.OK);
-		return re;
+       ResponseEntity<Order> re=new ResponseEntity<Order>(e1,HttpStatus.OK);
+       return re;
 	}
+	
+	/* To update the details in the database */
 	@PutMapping(path="/updateOrder/{id}")
 	public ResponseEntity<Order> updateOrder(@PathVariable long id, Order order) throws Exception
 	{
@@ -41,6 +44,8 @@ public class OrderController {
 		ResponseEntity<Order> re=new ResponseEntity<Order>(e1,HttpStatus.OK);
 		return re;
 	}
+	
+	/* To Delete the details from database based on Id */
 	@DeleteMapping(path="/removeorder/{id}")
 	public ResponseEntity<String> removeOrder(@PathVariable long id) throws Exception
 	{
@@ -49,6 +54,7 @@ public class OrderController {
 		return re;
 	}
 	
+	/* To get all the details present in the database */
 	@GetMapping(path="/getAllOrders")
 	public ResponseEntity<List<Order>> getAllOrders()
 	{
@@ -56,6 +62,8 @@ public class OrderController {
 		ResponseEntity<List<Order>> re=new ResponseEntity<List<Order>>(le,HttpStatus.OK);
 		return re;
 	}
+	
+	/* To get the details from database based on Id */
 	@GetMapping(path="/getOrder/{id}")
 	public ResponseEntity<Order> getOrderDetails(@PathVariable long id) throws Exception
 	{

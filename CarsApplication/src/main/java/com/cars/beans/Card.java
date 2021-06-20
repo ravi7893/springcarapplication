@@ -7,11 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
-@Entity
+@Entity /* It is a class and mapped in the database */
 public class Card {
+	
 	@NotBlank
 	private String cardName;
-	@Id
+	@Id  /*primary key in the database */
 	@NotBlank
 	private String cardNumber;
 	@NotBlank

@@ -24,9 +24,10 @@ import com.cars.service.AppointmentService;
 @RequestMapping(path="/appointment")
 public class AppointmentController {
 
-	@Autowired
+	@Autowired	/* To connect with the appointment service and add dependency Injection */
 	AppointmentService appointmentservice;
 	
+	/* To Add new appointment details in the database */
 	@PostMapping(path="/addappointment")
 	public ResponseEntity<Appointment> addAppointment(@RequestBody Appointment appointment) throws ResourceNotFoundException
 	{
@@ -34,6 +35,8 @@ public class AppointmentController {
 		ResponseEntity<Appointment> re=new ResponseEntity<Appointment>(a1,HttpStatus.OK);
 		return re;
 	}
+	
+	/* To Delete the details from database based on Id */
 	@DeleteMapping(path="/removeAppointment/{id}")
 	public ResponseEntity<String> removeAppointmentbyId(@PathVariable long id) throws Exception
 	{
@@ -42,6 +45,7 @@ public class AppointmentController {
 		return re;
 	}
 	
+	/* To update the details in the database */
 	@PutMapping(path="/updateAppointment/{id}")
 	public ResponseEntity<Appointment> updateAppointment(@PathVariable long id, Appointment appointment) throws Exception
 	{
@@ -49,6 +53,8 @@ public class AppointmentController {
 		ResponseEntity<Appointment> re=new ResponseEntity<Appointment>(a1,HttpStatus.OK);
 		return re;
 	}
+	
+	/* To get all the details present in the database */
 	@GetMapping(path="/getAllAppointments")
 	public ResponseEntity<List<Appointment>>  getAllAppointments()
 	{
@@ -57,7 +63,9 @@ public class AppointmentController {
 		ResponseEntity<List<Appointment>> re=new ResponseEntity<List<Appointment>>(le,HttpStatus.OK);
 		return re;
 	}
-		@GetMapping(path="/getAppointment/{id}")
+	
+	/* To get the details from database based on Id */
+	@GetMapping(path="/getAppointment/{id}")
 	public ResponseEntity<Optional<Appointment>> getAppointment(@PathVariable long id) throws Exception
 	{
 		Optional<Appointment> a1=appointmentservice.getAppointment(id);

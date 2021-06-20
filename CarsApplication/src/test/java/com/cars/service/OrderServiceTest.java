@@ -22,14 +22,15 @@ import com.cars.dao.IOrderRepository;
 @SpringBootTest
 class OrderServiceTest {
 	
-	@Autowired
+	@Autowired	/* To connect with the order service and dependency Injection */
 	OrderService oservice;
 	
-	@MockBean
+	@MockBean	/* To create a mock data using this order repository */
 	IOrderRepository orepo;
 
-	@Test
-	void testAddOrder() throws ResourceNotFoundException {
+	@Test	/* The Test to add order details checked using Mockito */
+	void testAddOrder() throws ResourceNotFoundException 
+	{
 		Address ad=new Address();
 		ad.setAid(1);
 		ad.setArea("Mallayapeta");
@@ -54,13 +55,13 @@ class OrderServiceTest {
 		a.setCustomer(c);
 		a.setPaymentMethod("card");
 		
-		 Mockito.when(orepo.save(a)).thenReturn(a);
-		   assertThat(oservice.addOrder(a)).isEqualTo(a);
-		
+		Mockito.when(orepo.save(a)).thenReturn(a);
+		assertThat(oservice.addOrder(a)).isEqualTo(a);
 	}
 
-	@Test
-	void testRemoveOrder() {
+	@Test /*The Test to remove order from database by id is checked using Mockito */
+	void testRemoveOrder() 
+	{
 		Address ad=new Address();
 		ad.setAid(1);
 		ad.setArea("Mallayapeta");
@@ -87,13 +88,14 @@ class OrderServiceTest {
 		
 		Optional<Order> a1=Optional.of(a);
 		Mockito.when(orepo.findById((long) 1)).thenReturn(a1);
-		 Mockito.when(orepo.existsById(a.getOrderId())).thenReturn(false);
-		   assertFalse(orepo.existsById(a.getOrderId()));
+		Mockito.when(orepo.existsById(a.getOrderId())).thenReturn(false);
+		assertFalse(orepo.existsById(a.getOrderId()));
 		
 	}
 
-	@Test
-	void testUpdateOrder() throws Exception {
+	@Test	/* The Test to update the order in database by id is checked using Mockito */
+	void testUpdateOrder() throws Exception
+	{
 		
 		Address ad=new Address();
 		ad.setAid(1);
@@ -122,14 +124,15 @@ class OrderServiceTest {
 		Optional<Order> c1=Optional.of(a);
 		Mockito.when(orepo.findById((long) 1)).thenReturn(c1);
 		a.setBillingDate("20-06-2021");
-   Mockito.when(orepo.save(a)).thenReturn(a);
-   assertThat(oservice.updateOrder(a.getOrderId(), a)).isEqualTo(a);
+		Mockito.when(orepo.save(a)).thenReturn(a);
+		assertThat(oservice.updateOrder(a.getOrderId(), a)).isEqualTo(a);
 
 		
 	}
 
-	@Test
-	void testGetOrderDetails() throws Exception {
+	@Test /* The Test to get single customer details using id checked using Mockito */
+	void testGetOrderDetails() throws Exception
+	{
 		Address ad=new Address();
 		ad.setAid(1);
 		ad.setArea("Mallayapeta");
@@ -154,15 +157,14 @@ class OrderServiceTest {
 		a.setCustomer(c);
 		a.setPaymentMethod("card");
 		
-		
 		Optional<Order> c2=Optional.of(a);
 		Mockito.when(orepo.findById((long) 1)).thenReturn(c2);
 	    assertThat(oservice.getOrderDetails(1)).isEqualTo(a);
 	}
 
-	@Test
-	void testGetAllOrders() {
-		
+	@Test	/*The Test to get All order details present in the database checked using Mockito*/
+	void testGetAllOrders()
+	{
 		Address ad=new Address();
 		ad.setAid(1);
 		ad.setArea("Mallayapeta");

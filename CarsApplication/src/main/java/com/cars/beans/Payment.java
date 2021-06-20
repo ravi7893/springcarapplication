@@ -11,10 +11,11 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
 
-@Entity
+@Entity	/* It is a class and mapped in the database */
 public class Payment {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	@Id /*primary key in the database */
+	@GeneratedValue(strategy = GenerationType.IDENTITY) /* Automatic Id generation */
 	private long paymentId;
 	@NotBlank
 	private String type1;

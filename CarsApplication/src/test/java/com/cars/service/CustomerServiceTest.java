@@ -21,14 +21,16 @@ import java.util.Optional;
 
 @SpringBootTest
 class CustomerServiceTest {
-	@Autowired
+	
+	@Autowired	/* To connect with the customer service and dependency Injection */
 	CustomerService cuservice;
 	
-	@MockBean
+	@MockBean	/* To create a mock data using this customer repository */
 	ICustomerRepository repo;
 
-	@Test
-	void testgetAllCustomers() {
+	@Test	/*The Test to get All customer details present in the database checked using Mockito*/
+	void testgetAllCustomers()
+	{
 		List<Customer> c=new ArrayList<>(); 
 		Address a=new Address();
 		a.setAid(1);
@@ -63,8 +65,9 @@ class CustomerServiceTest {
 		
 	}
 	
-	@Test
-	void testAddCustomer() throws ResourceNotFoundException {
+	@Test	/* The Test to add customer details checked using Mockito */
+	void testAddCustomer() throws ResourceNotFoundException
+	{
 		Address a=new Address();
 		a.setAid(1);
 		a.setArea("Mallayapeta");
@@ -86,8 +89,9 @@ class CustomerServiceTest {
         assertThat(cuservice.addCustomer(c1)).isEqualTo(c1);
 	}
 
-	@Test
-	void testgetCustomer() throws Exception {
+	@Test 	/* The Test to get single customer details using id checked using Mockito */
+	void testgetCustomer() throws Exception
+	{
 		Address a=new Address();
 		a.setAid(1);
 		a.setArea("Mallayapeta");
@@ -106,13 +110,13 @@ class CustomerServiceTest {
         c1.setDob("05-02-1995");
         
         Optional<Customer> c2=Optional.of(c1);
-		   Mockito.when(repo.findById((long) 10)).thenReturn(c2);
-
-		   assertThat(cuservice.getCustomer(10)).isEqualTo(c2);
+		Mockito.when(repo.findById((long) 10)).thenReturn(c2);
+		assertThat(cuservice.getCustomer(10)).isEqualTo(c2);
 	}
 	
-	@Test
-	void testRemoveCustomer() {
+	@Test /*The Test to remove customer from database by id is checked using Mockito */
+	void testRemoveCustomer() 
+	{
 		Address a=new Address();
 		a.setAid(1);
 		a.setArea("Mallayapeta");
@@ -132,12 +136,13 @@ class CustomerServiceTest {
         
         Optional<Customer> c=Optional.of(c1);
 		Mockito.when(repo.findById((long) 10)).thenReturn(c);
-		 Mockito.when(repo.existsById(c1.getUserId())).thenReturn(false);
-		   assertFalse(repo.existsById(c1.getUserId()));
+		Mockito.when(repo.existsById(c1.getUserId())).thenReturn(false);
+		assertFalse(repo.existsById(c1.getUserId()));
 	}
 	
-	@Test
-	void testupdateCustomer() throws Exception {
+	@Test /* The Test to update the customerin database by id is checked using Mockito */
+	void testupdateCustomer() throws Exception 
+	{
 		Address a=new Address();
 		a.setAid(1);
 		a.setArea("Mallayapeta");
@@ -161,9 +166,11 @@ class CustomerServiceTest {
 		Mockito.when(repo.save(c1)).thenReturn(c1);
 		assertThat(cuservice.updateCustomer(c1)).isEqualTo(c1);
 	}
-	@Test 
-	void testgetCustomersByLocation(){
-List<Customer> c=new ArrayList<>(); 
+	
+	@Test /* The Test to get customer details from database by location is checked using Mockito */
+	void testgetCustomersByLocation()
+	{
+		List<Customer> c=new ArrayList<>(); 
 		Address a=new Address();
 		a.setAid(1);
 		a.setArea("Mallayapeta");
@@ -192,10 +199,7 @@ List<Customer> c=new ArrayList<>();
 		c.add(c2);
 		
 		Mockito.when(repo.findByCitySorted("Rajahmundry")).thenReturn(c);
-	    
 	    assertThat(cuservice.getCustomersByLocation("Rajahmundry")).isEqualTo(c);
-	
-		
 	}
 	
 	

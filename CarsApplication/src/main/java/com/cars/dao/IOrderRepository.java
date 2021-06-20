@@ -9,13 +9,7 @@ import com.cars.beans.Order;
 public interface IOrderRepository extends JpaRepository<Order,Long> {
 	
 	/*@Query("Select a from Order a where a.orderId=?1")
-	Order updateOrder(Long id);*/
+	  Order updateOrder(Long id);*/
 	
-	
-	/*
-	 * public Order addOrder(Order order); public Order removeOrder(long id); public
-	 * Order updateOrder(long id, Order order); public Order getOrderDetails(long
-	 * id); public List<Order> getAllOrders();
-	 */
 
 }

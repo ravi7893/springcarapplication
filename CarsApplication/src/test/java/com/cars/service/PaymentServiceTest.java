@@ -22,13 +22,15 @@ import com.cars.dao.IPaymentRepository;
 @SpringBootTest
 class PaymentServiceTest {
 	
-	@Autowired
+	@Autowired	/* To connect with the user service and dependency Injection */
 	PaymentService payservice;
-	@MockBean
+	
+	@MockBean	/* To create a mock data using this payment repository */
 	IPaymentRepository repo;
 	
-	@Test
-	void testaddPayment() throws ResourceNotFoundException {
+	@Test	/* The Test to add payment details checked using Mockito */
+		void testaddPayment() throws ResourceNotFoundException
+	{
 		List<Card> cs=new ArrayList<>();
 		Card ca=new Card();
 		ca.setCardExpiry("2021/12");
@@ -47,7 +49,8 @@ class PaymentServiceTest {
 		Mockito.when(repo.save(p)).thenReturn(p);
 		assertThat(payservice.addPayment(p)).isEqualTo(p);
 	}
-	@Test
+	
+	@Test /*The Test to remove payment from database by id is checked using Mockito */
 	void testremovePayment()
 	{
 		List<Card> cs=new ArrayList<>();
@@ -67,13 +70,13 @@ class PaymentServiceTest {
 		
 		Optional<Payment> u1=Optional.of(p);
 		Mockito.when(repo.findById((long) 10)).thenReturn(u1);
-		 Mockito.when(repo.existsById(p.getPaymentId())).thenReturn(false);
-		   assertFalse(repo.existsById(p.getPaymentId()));
-		
+		Mockito.when(repo.existsById(p.getPaymentId())).thenReturn(false);
+		assertFalse(repo.existsById(p.getPaymentId()));	
 	}
 	
-	@Test
-	void testupdate() throws Exception {
+	@Test	/* The Test to update the payment in database by id is checked using Mockito */
+	void testupdate() throws Exception
+	{
 		List<Card> cs=new ArrayList<>();
 		Card ca=new Card();
 		ca.setCardExpiry("2021/12");
@@ -96,8 +99,9 @@ class PaymentServiceTest {
 		assertThat(payservice.updatePayment(p)).isEqualTo(p);
 	}
 	
-	@Test
-	void testgetPaymentDetails() throws Exception {
+	@Test /* The Test to get single Payment details using id checked using Mockito */
+	void testgetPaymentDetails() throws Exception
+	{
 		List<Card> cs=new ArrayList<>();
 		Card ca=new Card();
 		ca.setCardExpiry("2021/12");
@@ -114,14 +118,14 @@ class PaymentServiceTest {
 		p.setType1("single");
 		
 		Optional<Payment> p1=Optional.of(p);
-		   Mockito.when(repo.findById((long) 10)).thenReturn(p1);
-		   Mockito.when(repo.getId(p.getPaymentId())).thenReturn(p1);
-
-		   assertThat(payservice.getPaymentDetails(p.getPaymentId())).isEqualTo(p1);
+		Mockito.when(repo.findById((long) 10)).thenReturn(p1);
+		Mockito.when(repo.getId(p.getPaymentId())).thenReturn(p1);
+		assertThat(payservice.getPaymentDetails(p.getPaymentId())).isEqualTo(p1);
 	}
 	
-	@Test
-	void testgetAllPaymentDetails() throws Exception {
+	@Test	/*The Test to get All payment details present in the database checked using Mockito*/
+	void testgetAllPaymentDetails() throws Exception 
+	{
 		List<Card> cs=new ArrayList<>();
 		Card ca=new Card();
 		ca.setCardExpiry("2021/12");
@@ -148,9 +152,7 @@ class PaymentServiceTest {
 		p.add(p1);
 		p.add(p2);
 		
-		Mockito.when(repo.findByPaymentIdSorted()).thenReturn(p);
-		
+		Mockito.when(repo.findByPaymentIdSorted()).thenReturn(p);	
 		assertThat(payservice.getAllPaymentDetails()).isEqualTo(p);
-	
 	}
 }

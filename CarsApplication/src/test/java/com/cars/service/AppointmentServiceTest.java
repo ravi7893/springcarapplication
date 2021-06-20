@@ -23,13 +23,16 @@ import com.cars.dao.IAppointmentRepository;
 
 @SpringBootTest
 class AppointmentServiceTest {
-	@Autowired
+	
+	@Autowired	/* To connect with the appointment service and dependency Injection */
 	AppointmentService appointmentservice;
-	@MockBean
+	
+	@MockBean	/* To create a mock data using this appointment repository */
 	IAppointmentRepository repo;
 
-	@Test
-	void testaddAppointment() throws ResourceNotFoundException {
+	@Test	/* The Test to add appointment details checked using Mockito */
+	void testaddAppointment() throws ResourceNotFoundException
+	{
 		List<Card> cs=new ArrayList<>();
 		Card ca=new Card();
 		ca.setCardExpiry("2021/12");
@@ -75,8 +78,9 @@ class AppointmentServiceTest {
 		assertThat(appointmentservice.addAppointment(u)).isEqualTo(u);
 	}
 	
-	@Test
-	void testUpdateAppointment() throws Exception {
+	@Test	/* The Test to update the Appointment in database by id is checked using Mockito */
+	void testUpdateAppointment() throws Exception
+	{
 		List<Card> cs=new ArrayList<>();
 		Card ca=new Card();
 		ca.setCardExpiry("2021/12");
@@ -125,8 +129,9 @@ class AppointmentServiceTest {
 		assertThat(appointmentservice.updateAppointment(ap.getAppointmentId(),ap)).isEqualTo(ap);
 	}
 	
-	@Test
-	void testRemoveAppointmentbyId() {
+	@Test /*The Test to remove Appointement from database by id is checked using Mockito */
+	void testRemoveAppointmentbyId() 
+	{
 		List<Card> cs=new ArrayList<>();
 		Card ca=new Card();
 		ca.setCardExpiry("2021/12");
@@ -170,11 +175,11 @@ class AppointmentServiceTest {
 	
 		Optional<Appointment> u1=Optional.of(a);
 		Mockito.when(repo.findById((long) 12)).thenReturn(u1);
-		 Mockito.when(repo.existsById(a.getAppointmentId())).thenReturn(false);
-		   assertFalse(repo.existsById(a.getAppointmentId()));
+		Mockito.when(repo.existsById(a.getAppointmentId())).thenReturn(false);
+		assertFalse(repo.existsById(a.getAppointmentId()));
 	}
 	
-	@Test
+	@Test /* The Test to get single Appointment details using id checked using Mockito */
 	void testGetAppointment() throws Exception {
 		List<Card> cs=new ArrayList<>();
 		Card ca=new Card();
@@ -218,11 +223,10 @@ class AppointmentServiceTest {
 		a.setPreferredTime("18:00");
 		Optional<Appointment> c1=Optional.of(a);
 		Mockito.when(repo.findById((long) 12)).thenReturn(c1);
-	    assertThat(appointmentservice.getAppointment(12)).isEqualTo(c1);
-	    
+	    assertThat(appointmentservice.getAppointment(12)).isEqualTo(c1);  
 	}
 
-	@Test
+	@Test	/*The Test to get All appointment details present in the database checked using Mockito*/
 	void testGetAllAppointments() {
 		List<Card> cs=new ArrayList<>();
 		Card ca=new Card();
@@ -289,10 +293,5 @@ class AppointmentServiceTest {
 		
 		Mockito.when(repo.findAll()).thenReturn(appointList);
 		assertThat(appointmentservice.getAllAppointments()).isEqualTo(appointList);
-
-		
 	}
-
-	
-
 }

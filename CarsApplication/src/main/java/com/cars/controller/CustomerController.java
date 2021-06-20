@@ -19,14 +19,14 @@ import com.cars.advices.ResourceNotFoundException;
 import com.cars.beans.Customer;
 import com.cars.service.CustomerService;
 
-@Controller
 @RestController
 @RequestMapping(path="/api")
 public class CustomerController {
 	
-	@Autowired
+	@Autowired	/* To connect with the customer service and add dependency Injection */
 	CustomerService cusservice;
 	
+	/* To get all the details present in the database */
 	@GetMapping(path="/getCustomers")
 	public ResponseEntity<List<Customer>> getCustomers()
 	{
@@ -36,6 +36,7 @@ public class CustomerController {
 		return re;
 	}
 	
+	/* To get the details from database based on Id */
 	@GetMapping(path="/getCustomer/{userId}")
 	public ResponseEntity<Optional<Customer>> getCustomerbyId(@PathVariable long userId) throws Exception
 	{
@@ -45,31 +46,31 @@ public class CustomerController {
 		return re;
 	}
 
-
+	/* To Add new customer details in the database */
 	@PostMapping(path="/addCustomer")
 	public ResponseEntity<Customer> addCustomer(@RequestBody Customer e) throws ResourceNotFoundException
 	{
 		Customer e1=this.cusservice.addCustomer(e);
-		
 		ResponseEntity<Customer> re=new ResponseEntity<Customer>(e1,HttpStatus.OK);
 		return re;
 	}
 	
+	/* To update the details in the database */
 	@PutMapping(path="/updateCustomer")
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) throws Exception 
 	{
 		Customer e1=cusservice.updateCustomer(customer);
-		
 		ResponseEntity<Customer> re=new ResponseEntity<Customer>(e1,HttpStatus.OK);
 		return re;
 	}
 	
-	  @DeleteMapping(path="/removeCustomer/{userId}") 
-	  public ResponseEntity<String>removeCustomer(@PathVariable long userId) throws Exception { 
-		  cusservice.removeCustomer(userId);
-	  
-	  ResponseEntity<String> re=new ResponseEntity<String>("Deleted",HttpStatus.OK); 
-	  return re; 
+	/* To Delete the details from database based on Id */
+	@DeleteMapping(path="/removeCustomer/{userId}") 
+	public ResponseEntity<String>removeCustomer(@PathVariable long userId) throws Exception
+	{ 
+		cusservice.removeCustomer(userId);	  
+		ResponseEntity<String> re=new ResponseEntity<String>("Deleted",HttpStatus.OK); 
+		return re; 
 	  }
 	  
 	@GetMapping(path = {"/getCustomersByLocation/{city}"}

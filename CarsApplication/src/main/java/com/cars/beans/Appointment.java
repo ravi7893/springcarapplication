@@ -9,10 +9,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
-@Entity
+@Entity /* It is a class and mapped in the database */
 public class Appointment {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	@Id /*primary key in the database */
+	@GeneratedValue(strategy = GenerationType.IDENTITY) /* Automatic Id generation */
 	private long appointmentId;
 	@NotBlank
 	private String location;

@@ -22,7 +22,7 @@ import com.cars.service.UserService;
 @RestController
 @RequestMapping(path="/api")
 public class UserController {
-	@Autowired	/* To connect with the user service and dependency Injection */
+	@Autowired	/* To connect with the user service and add dependency Injection */
 	UserService userservice;
 	
 	/* To Add new user in the database */

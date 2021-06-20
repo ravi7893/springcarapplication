@@ -21,27 +21,30 @@ import com.cars.dao.ICarRepository;
 @SpringBootTest
 class CarServiceTest {
 	
-	@Autowired
+	@Autowired	/* To connect with the car service and dependency Injection */
 	CarService carservice;
 	
-	@MockBean
+	@MockBean	/* To create a mock data using this car repository */
 	ICarRepository carrepo;
 
-	@Test
-	void testAddCar() throws ResourceNotFoundException {
-			Car c1=new Car();
-			c1.setBrand("Hyundai");
-			c1.setCarId(1);
-			c1.setModel("i20");
-			c1.setPrice(1400000);
-			c1.setRegistrationState("kerala");
-			c1.setRegistrationYear("2020");
-			c1.setVariant("sportz");
-	   Mockito.when(carrepo.save(c1)).thenReturn(c1);
-	   assertThat(carservice.addCar(c1)).isEqualTo(c1);
-		}
-	@Test
-	void testRemoveCarbyId() {
+	@Test	/* The Test to add car details checked using Mockito */
+	void testAddCar() throws ResourceNotFoundException
+	{
+		Car c1=new Car();
+		c1.setBrand("Hyundai");
+		c1.setCarId(1);
+		c1.setModel("i20");
+		c1.setPrice(1400000);
+		c1.setRegistrationState("kerala");
+		c1.setRegistrationYear("2020");
+		c1.setVariant("sportz");
+		Mockito.when(carrepo.save(c1)).thenReturn(c1);
+		assertThat(carservice.addCar(c1)).isEqualTo(c1);
+	}
+	
+	@Test /*The Test to remove car from database by id is checked using Mockito */
+	void testRemoveCarbyId()
+	{
 		Car c1=new Car();
 		c1.setBrand("Hyundai");
 		c1.setCarId(1);
@@ -52,12 +55,13 @@ class CarServiceTest {
 		c1.setVariant("sportz");
 		Optional<Car> c2=Optional.of(c1);
 		Mockito.when(carrepo.findById((long) 1)).thenReturn(c2);
-		 Mockito.when(carrepo.existsById(c1.getCarId())).thenReturn(false);
-		   assertFalse(carrepo.existsById(c1.getCarId()));
+		Mockito.when(carrepo.existsById(c1.getCarId())).thenReturn(false);
+		assertFalse(carrepo.existsById(c1.getCarId()));
 	}
 
-	@Test
-	void testUpdateCar() throws Exception{
+	@Test	/* The Test to update the car in database by id is checked using Mockito */
+	void testUpdateCar() throws Exception
+	{
 		Car c1=new Car();
 		c1.setBrand("Hyundai");
 		c1.setCarId(1);
@@ -69,12 +73,13 @@ class CarServiceTest {
 		Optional<Car> c2=Optional.of(c1);
 		Mockito.when(carrepo.findById((long) 1)).thenReturn(c2);
 		c1.setBrand("Maruti");
-   Mockito.when(carrepo.save(c1)).thenReturn(c1);
-   assertThat(carservice.updateCar(c1.getCarId(), c1)).isEqualTo(c1);
+		Mockito.when(carrepo.save(c1)).thenReturn(c1);
+		assertThat(carservice.updateCar(c1.getCarId(), c1)).isEqualTo(c1);
 	}
 
-	@Test
-	void testGetCar() throws Exception{
+	@Test /* The Test to get single car details using id checked using Mockito */
+	void testGetCar() throws Exception
+	{
 		Car c1=new Car();
 		c1.setBrand("Hyundai");
 		c1.setCarId(1);
@@ -88,8 +93,9 @@ class CarServiceTest {
 	    assertThat(carservice.getCar(1)).isEqualTo(c1);
 	}
 
-	@Test
-	void testGetAllCars() {
+	@Test	/*The Test to get All car details present in the database checked using Mockito*/
+	void testGetAllCars()
+	{
 		Car c1=new Car();
 		c1.setBrand("Hyundai");
 		c1.setCarId(1);
@@ -115,8 +121,9 @@ class CarServiceTest {
 		assertThat(carservice.getAllCars()).isEqualTo(carList);
 	}
 
-	@Test
-	void testGetCarsByModel() {
+	@Test	/*The Test to get All car details present in the database by Model checked using Mockito*/
+	void testGetCarsByModel()
+	{
 		List<Car> c=new ArrayList<>();
 		Car c1 = new Car();
 		c1.setBrand("Hyundai");
@@ -139,12 +146,11 @@ class CarServiceTest {
 		c.add(c1);
 		c.add(c2);
 		
-		 Mockito.when(carrepo.getCarsByModel(c1.getModel())).thenReturn(c);
-		    
-		    assertThat(carservice.getCarsByModel(c1.getModel())).isEqualTo(c);
-		 
+		Mockito.when(carrepo.getCarsByModel(c1.getModel())).thenReturn(c);
+		assertThat(carservice.getCarsByModel(c1.getModel())).isEqualTo(c); 
 	}
-	@Test
+	
+	@Test  /*The Test to get All car details present in the database by Brand checked using Mockito*/
 	void testGetCarsByBrand() {
 		List<Car> c=new ArrayList<>();
 		Car c1 = new Car();
@@ -168,13 +174,13 @@ class CarServiceTest {
 		c.add(c1);
 		c.add(c2);
 		
-		 Mockito.when(carrepo.getCarsByBrand(c1.getBrand())).thenReturn(c);
-		    
-		    assertThat(carservice.getCarsByBrand(c1.getBrand())).isEqualTo(c);
+		Mockito.when(carrepo.getCarsByBrand(c1.getBrand())).thenReturn(c);
+		assertThat(carservice.getCarsByBrand(c1.getBrand())).isEqualTo(c);
 	}
 
-	@Test
-	void testGetCarsByPrice() {
+	@Test  /*The Test to get All car details present in the database by price checked using Mockito*/
+	void testGetCarsByPrice() 
+	{
 		List<Car> c=new ArrayList<>();
 		Car c1 = new Car();
 		c1.setBrand("Hyundai");
@@ -197,9 +203,8 @@ class CarServiceTest {
 		c.add(c1);
 		c.add(c2);
 		
-		 Mockito.when(carrepo.getCarsByPrice(c1.getPrice())).thenReturn(c);
-		    
-		    assertThat(carservice.getCarsByPrice(c1.getPrice())).isEqualTo(c);
+		Mockito.when(carrepo.getCarsByPrice(c1.getPrice())).thenReturn(c);
+		assertThat(carservice.getCarsByPrice(c1.getPrice())).isEqualTo(c);
 	}
 
 }

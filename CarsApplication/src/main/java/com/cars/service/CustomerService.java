@@ -19,31 +19,42 @@ public class CustomerService implements ICustomerService {
 
 	List<Customer> le;
 
-	@Autowired
+	@Autowired	/* To Connect with Payment Repository and add dependency Injection  */
 	ICustomerRepository icrepo;
 	
+	/* Regex condition to check Phone number */
 	String phn = "[6-9][0-9]{9}";
 	Pattern phone=Pattern.compile(phn);
 	
+	/* Regex condition to check Email Id */
 	Pattern email1 = Pattern.compile("[a-zA-Z_]+[0-9]*[@][a-zAZ]+[/.][a-zA-Z]{2,3}");
 	
 	
-	@Override
-	public List<Customer> getAllCustomers() {
+	@Override	/* It is child class method overriding the parent class method */
+	public List<Customer> getAllCustomers()
+	{
 		le = new ArrayList<>();
+		
 		le= icrepo.findAll();
+		
 		return le;
 	}
 	
-	@Override
-	public Customer addCustomer(Customer customer) throws ResourceNotFoundException {
+	@Override	/* It is child class method overriding the parent class method */
+	public Customer addCustomer(Customer customer) throws ResourceNotFoundException
+	{
 		String e=customer.getEmail();
+		
 		String ph=customer.getContactNo();
+		
 		long id=customer.getUserId();
+		
 		Optional<Customer> s=icrepo.findById(id);
+		
 		if(s.isPresent()) {
 		throw new ResourceNotFoundException(id +" is already present in the database");
 		}
+		
 		if(email1.matcher(e).matches())
 		{
 			if(phone.matcher(ph).matches())
@@ -59,71 +70,95 @@ public class CustomerService implements ICustomerService {
 		{
 		throw new ResourceNotFoundException("Enter a valid Email id..");
 		}
+		
 		return customer;
 	}
 	
-	@Override
-	public Optional<Customer> getCustomer(long uid) throws Exception {
+	@Override	/* It is child class method overriding the parent class method */
+	public Optional<Customer> getCustomer(long uid) throws Exception
+	{
 		Supplier<Exception> s = () -> new ResourceNotFoundException("Customer Id is not present in the database");
+		
 		Optional<Customer> e1 = Optional.of(icrepo.findById(uid).orElseThrow(s));
+		
 		return e1;
 	}
 	
-	@Override
-	public Customer updateCustomer(Customer customer) throws Exception  {
+	@Override	/* It is child class method overriding the parent class method */
+	public Customer updateCustomer(Customer customer) throws Exception
+	{
 		String e=customer.getEmail();
+		
 		String ph=customer.getContactNo();
+		
 		long uid=customer.getUserId();
-		System.out.println(customer.getName());
+		
 		Supplier<Exception> s = () -> new ResourceNotFoundException("Customer Id is not present in the database");
+		
 		Customer c1=icrepo.findById(uid).orElseThrow(s);
+		
 		Address a=c1.getAddress();
+		
 		long asid=a.getAid();
+		
 		Address a2=customer.getAddress();
+		
 		long acid=a2.getAid();
 
 		if(asid==acid)
 		{
 		c1.setName(customer.getName());
+		
 		c1.setAddress(customer.getAddress());
+		
 		c1.setContactNo(customer.getContactNo());
+		
 		c1.setDob(customer.getDob());
+		
 		c1.setEmail(customer.getEmail());
-		if(email1.matcher(e).matches())
-		{
-			if(phone.matcher(ph).matches())
+		
+			if(email1.matcher(e).matches())
 			{
-				icrepo.save(c1);
+				if(phone.matcher(ph).matches())
+				{
+					icrepo.save(c1);
+				}
+				else
+				{
+					throw new ResourceNotFoundException("Enter a 10 digit valid phn number which starts in between [6-9]");
+				}
 			}
 			else
 			{
-				throw new ResourceNotFoundException("Enter a 10 digit valid phn number which starts in between [6-9]");
+				throw new ResourceNotFoundException("Enter a valid Email id..");
 			}
-		}
-		else
-		{
-		throw new ResourceNotFoundException("Enter a valid Email id..");
-		}	
 		}
 		else {
 			throw new ResourceNotFoundException("Address id is not same as  in the customer details plz check and give.");
 		}
+		
 		return c1;
 	}
 	
-
-	@Override
-	public String removeCustomer(long userId) throws Exception {
+	@Override	/* It is child class method overriding the parent class method */
+	public String removeCustomer(long userId) throws Exception 
+	{
 		Supplier<Exception> s = () -> new ResourceNotFoundException("Customer Id is not present in the database");
+		
 		icrepo.findById(userId).orElseThrow(s);
+		
 		icrepo.deleteById(userId);
+		
 		return "Deleted";
 	}
 	 
-	@Override
-	public List<Customer> getCustomersByLocation(String city) {
+	@Override	/* It is child class method overriding the parent class method */
+	public List<Customer> getCustomersByLocation(String city)
+	{
 		List<Customer> ls = icrepo.findByCitySorted(city);
+		
 		System.out.println(ls);
+		
 		return ls;
 	}
 

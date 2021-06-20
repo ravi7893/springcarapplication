@@ -10,21 +10,20 @@ import com.cars.beans.Car;
 @Repository
 public interface ICarRepository extends JpaRepository<Car,Long>  {
 	
+	/*To Retrive the data of car details from database using Id */
 	@Query("Select c from Car c where c.carId=?1")
 	Car updateCar(Long id);
+	
+	/*To Retrive the data of car details from database using model */
 	@Query("Select c from Car c where c.model=?1")
 	List<Car> getCarsByModel(String model1);
+	
+	/*To Retrive the data of car details from database using brand */
 	@Query("Select c from Car c where c.brand=?1")
 	List<Car> getCarsByBrand(String brand1);
+	
+	/*To Retrive the data of car details from database using price */
 	@Query("Select c from Car c where c.price=?1")
 	List<Car> getCarsByPrice(long price1);
 
-
-	
-	/*
-	 * public Car addCar(Car car); public Car removeCar(long id); public Car
-	 * updateCar(long id, Car car); public Car getCar(long id); public List<Car>
-	 * getAllCars(); public List<Car> getCarsByLocation(); public List<Car>
-	 * getCarsByModel(); public List<Car> getCarsByBrand();
-	 */
 }

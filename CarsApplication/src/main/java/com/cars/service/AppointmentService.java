@@ -18,32 +18,50 @@ import com.cars.dao.IAppointmentRepository;
 
 @Service
 public class AppointmentService implements IAppointmentService {
-	@Autowired
+	
+	@Autowired	/* To Connect with Appointment Repository and add dependency Injection  */
 	IAppointmentRepository repo;
 	
+	/* Regex condition to check Phone number */
 	String phn = "[6-9][0-9]{9}";
 	Pattern phone=Pattern.compile(phn);
+	
+	/* Regex condition to check Email Id */
 	Pattern email1 = Pattern.compile("[a-zA-Z_]+[0-9]*[@][a-zAZ]+[/.][a-zA-Z]{2,3}");
+	
+	/* Regex condition to check credit/debit card number */
 	Pattern p2 = Pattern.compile("^\\d{16}$");
+	
+	/* Regex condition to check credit/debit card cvv number */
 	Pattern pc = Pattern.compile("[0-9]{3}$");
 
-	@Override
-	public Appointment addAppointment(Appointment appointment) throws ResourceNotFoundException {
+	@Override	/* It is child class method overriding the parent class method */
+	public Appointment addAppointment(Appointment appointment) throws ResourceNotFoundException
+	{
 		long id=appointment.getAppointmentId();
+		
 		Optional<Appointment> s=repo.findById(id);
+		
 		Customer customer=appointment.getCustomer();
+		
 		String e=customer.getEmail();
+		
 		String ph=customer.getContactNo();
 		
 		Payment payment=appointment.getPayment();
+		
 		List<Card> np1=payment.getCard();
+		
 		Card np2=np1.get(0);
+		
 		String np=np2.getCardNumber();
+		
 		String np3=np2.getCvv();
 		
 		if(s.isPresent()) {
 		throw new ResourceNotFoundException(id +" is already present in the database");
 		}
+		
 		if(email1.matcher(e).matches())
 		{
 			if(phone.matcher(ph).matches())
@@ -73,45 +91,71 @@ public class AppointmentService implements IAppointmentService {
 		{
 		throw new ResourceNotFoundException("Enter a valid Email id..");
 		}
+		
 		return appointment;
 	}
 
-	@Override
-	public String removeAppointmentbyId(long id) throws Exception {
+	@Override	/* It is child class method overriding the parent class method */
+	public String removeAppointmentbyId(long id) throws Exception
+	{
 		Supplier<Exception> s = () -> new ResourceNotFoundException("Appointment Id is not present in the database");
+		
 		repo.findById(id).orElseThrow(s);
+		
 		repo.deleteById(id);
+		
 		return "Deleted";
 	}
 
-	@Override
-	public Appointment updateAppointment(long id, Appointment appointment) throws Exception {
+	@Override	/* It is child class method overriding the parent class method */
+	public Appointment updateAppointment(long id, Appointment appointment) throws Exception
+	{
 		Supplier<Exception> s = () -> new ResourceNotFoundException("Appointment Id is not present in the database");
+		
 		Appointment a1=repo.findById(id).orElseThrow(s);
+		
 		Customer customer=appointment.getCustomer();
+		
 		String e=customer.getEmail();
+		
 		String ph=customer.getContactNo();
 		
 		Payment payment=appointment.getPayment();
+		
 		List<Card> np1=payment.getCard();
+		
 		Card np2=np1.get(0);
+		
 		String np=np2.getCardNumber();
+		
 		String np3=np2.getCvv();
+		
 		Customer c1=a1.getCustomer();
+		
 		Address a=c1.getAddress();
+		
 		long asid=a.getAid();
+		
 		Customer cu=appointment.getCustomer();
+		
 		Address a2=cu.getAddress();
+		
 		long acid=a2.getAid();
 		
 		if(asid==acid)
 		{
 		a1.setCustomer(appointment.getCustomer());
+		
 		a1.setInspectionType(appointment.getInspectionType());
+		
 		a1.setLocation(appointment.getLocation());
+		
 		a1.setPayment(appointment.getPayment());
+		
 		a1.setPreferredDate(appointment.getPreferredDate());
+		
 		a1.setPreferredTime(appointment.getPreferredTime());
+		
 		if(email1.matcher(e).matches())
 		{
 			if(phone.matcher(ph).matches())
@@ -143,28 +187,27 @@ public class AppointmentService implements IAppointmentService {
 		}
 
 		}
+		
 		return a1;
 	}
 
-	@Override
-	public Optional<Appointment> getAppointment(long id) throws Exception {
+	@Override	/* It is child class method overriding the parent class method */
+	public Optional<Appointment> getAppointment(long id) throws Exception 
+	{
 		
 		Supplier<Exception> s = () -> new ResourceNotFoundException("Appointment Id is not present in the database");
+		
 		Optional<Appointment> a=Optional.of(repo.findById(id).orElseThrow(s));
+		
 		return a;
 	}
 
-	@Override
-	public List<Appointment> getAllAppointments() {
+	@Override	/* It is child class method overriding the parent class method */
+	public List<Appointment> getAllAppointments()
+	{
 		List<Appointment> le = repo.findAll();
+		
 		return le;
-	}
-
-	@Override
-	public List<Appointment> getOpenAppointments() {
-		return null;
-	}
-
-	
+	}	
 	
 }

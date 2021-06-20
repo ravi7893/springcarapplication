@@ -23,20 +23,19 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @RestController
 @RequestMapping(path="/api")
 public class PaymentController {
-	/*
-	 * @RequestMapping("welcome") public String welcome() {
-	 * System.out.println("Welcome to Spring Data JPA Rest"); return
-	 * "Welcome to Spring Data JPA Rest"; }
-	 */
-	@Autowired
+	
+	@Autowired	/* To connect with the payment service and add dependency Injection */
 	PaymentService paymentservice;
 	
+	/* To Add new payment details in the database */
 	@PostMapping(path="/Payment/addPayment")
-	public Payment addPayment(@RequestBody Payment payment) throws ResourceNotFoundException{
+	public Payment addPayment(@RequestBody Payment payment) throws ResourceNotFoundException
+	{
 		Payment p=paymentservice.addPayment(payment);
 		return p;
 	}
 	
+	/* To Delete the details from database based on Id */
 	@DeleteMapping(path="/deletePayment/{paymentId}")
 	public ResponseEntity<String> deleteEmployeeById(@PathVariable long paymentId) throws ResourceNotFoundException
 	{
@@ -45,6 +44,7 @@ public class PaymentController {
 		return re;
 	}
 	
+	/* To update the details in the database */
 	@PutMapping(path="/updatePayment/{paymentId}")
 	public ResponseEntity<Payment> updatePaymentById(@RequestBody Payment p) throws Exception 
 	{
@@ -53,6 +53,7 @@ public class PaymentController {
 		return re;
 	}
 	
+	/* To get the details from database based on Id */
 	@GetMapping(path="/getPaymentDetails/{paymentId}")
 	public ResponseEntity<Optional<Payment>> getEmpById(@PathVariable long paymentId) throws Exception
 	{
@@ -60,7 +61,8 @@ public class PaymentController {
 		ResponseEntity<Optional<Payment>> re=new ResponseEntity<Optional<Payment>>(p1,HttpStatus.OK);
 		return re;
 	}
-
+	
+	/* To get all the details present in the database */
 	@GetMapping(path="/getAllPaymentDetails")
 	public ResponseEntity<List<Payment>> getAllPaymentDetails()
 	{

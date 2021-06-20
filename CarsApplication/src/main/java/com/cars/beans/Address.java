@@ -6,10 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
-@Entity
+@Entity /* It is a class and mapped in the database */
 public class Address {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	@Id /*primary key in the database */
+	@GeneratedValue(strategy = GenerationType.IDENTITY) /* Automatic Id generation */
 	private long aid;
 	@NotBlank
 	private String doorNo;

@@ -9,8 +9,9 @@ import javax.validation.constraints.NotBlank;
 
 
 @Entity /* It is a class and mapped in the database */
-@Table(name="UserForm")
+@Table(name="UserForm") /*It is used how the table name should be in database*/
 public class User {
+	
 	@Id	/*primary key in the database */
 	@GeneratedValue(strategy = GenerationType.IDENTITY) /* Automatic Id generation */
 	private long userId;

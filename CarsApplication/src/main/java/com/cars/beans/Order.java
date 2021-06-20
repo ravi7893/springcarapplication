@@ -8,11 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-@Entity
-@Table(name = "OrderForm")
+
+@Entity	/* It is a class and mapped in the database */
+@Table(name = "OrderForm")  /*It is used how the table name should be in database*/
 public class Order {
-	@Id	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	@Id	/*primary key in the database */
+	@GeneratedValue(strategy = GenerationType.IDENTITY) /* Automatic Id generation */
 	private long orderId;
 	@NotBlank
 	private double amount;

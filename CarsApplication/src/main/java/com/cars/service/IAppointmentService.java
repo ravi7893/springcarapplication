@@ -14,5 +14,4 @@ public interface IAppointmentService {
 	public Appointment updateAppointment(long id, Appointment appointment) throws Exception;
 	public Optional<Appointment> getAppointment(long id) throws Exception;
 	public List<Appointment> getAllAppointments(); 
-	public List<Appointment> getOpenAppointments();
 }

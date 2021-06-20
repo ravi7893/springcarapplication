@@ -24,9 +24,10 @@ import com.cars.service.CarService;
 @RequestMapping(path="/car")
 public class CarController {
 
-	@Autowired
+	@Autowired	/* To connect with the car service and add dependency Injection */
 	CarService carservice;
 	
+	/* To Add new car details in the database */
 	@PostMapping(path="/addCar")
 	public ResponseEntity<Car> addCar(@RequestBody Car car) throws ResourceNotFoundException
 	{
@@ -34,6 +35,8 @@ public class CarController {
 		ResponseEntity<Car> re=new ResponseEntity<Car>(e1,HttpStatus.OK);
 		return re;
 	}
+	
+	/* To update the details in the database */
 	@PutMapping(path="/updateCar/{id}")
 	public ResponseEntity<Car> updateCar(@PathVariable long id, Car car) throws Exception
 	{
@@ -41,6 +44,8 @@ public class CarController {
 		ResponseEntity<Car> re=new ResponseEntity<Car>(e1,HttpStatus.OK);
 		return re;
 	}
+	
+	/* To get all the details present in the database */
 	@GetMapping(path="/getAllCars")
 	public ResponseEntity<List<Car>> getAllCars()
 	{
@@ -49,6 +54,8 @@ public class CarController {
 		ResponseEntity<List<Car>> re=new ResponseEntity<List<Car>>(le,HttpStatus.OK);
 		return re;
 	}
+	
+	/* To get the details from database based on model */
 	@GetMapping(path="/getCarsByModel/{model}")
 	public ResponseEntity<List<Car>> getCarsByModel(@PathVariable String model)
 	{
@@ -56,6 +63,8 @@ public class CarController {
 		ResponseEntity<List<Car>> re=new ResponseEntity<List<Car>>(le,HttpStatus.OK);
 		return re;
 	}
+	
+	/* To get the details from database based on brand */
 	@GetMapping(path="/getCarsByBrand/{brand}")
 	public ResponseEntity<List<Car>> getCarsByBrand(@PathVariable String brand)
 	{
@@ -63,6 +72,8 @@ public class CarController {
 		ResponseEntity<List<Car>> re=new ResponseEntity<List<Car>>(le,HttpStatus.OK);
 		return re;
 	}
+	
+	/* To get the details from database based on price */
 	@GetMapping(path="/getCarsByPrice/{price}")
 	public ResponseEntity<List<Car>> getCarsByPrice(@PathVariable long price)
 	{
@@ -70,6 +81,8 @@ public class CarController {
 		ResponseEntity<List<Car>> re=new ResponseEntity<List<Car>>(le,HttpStatus.OK);
 		return re;
 	}
+	
+	/* To get the details from database based on Id */
 	@GetMapping(path="/getCar/{id}")
 	public ResponseEntity<Car> getCar(@PathVariable long id) throws Exception
 	{
@@ -77,6 +90,8 @@ public class CarController {
 		ResponseEntity<Car> re=new ResponseEntity<Car>(e1,HttpStatus.OK);
 		return re;
 	}
+	
+	/* To Delete the details from database based on Id */
 	@DeleteMapping(path="/removeCar/{id}")
 	public ResponseEntity<String> removeCarbyId(@PathVariable Long id) throws Exception
 	{
